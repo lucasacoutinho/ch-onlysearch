@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  ch-onlysearch-api:
+    container_name: ch-onlysearch-api
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile
+    ports:
+      - '80:80'
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=true
+    networks:
+      - ch-onlysearch-network
+    depends_on:
+      ch-onlysearch-database:
+        condition: service_healthy
+      ch-onlysearch-redis:
+        condition: service_started
+
+  ch-onlysearch-database:
+    container_name: ch-onlysearch-database
+    image: 'postgres:17.4-bookworm'
+    restart: unless-stopped
+    tty: true
+    environment:
+      POSTGRES_DB: onlysearch
+      POSTGRES_USER: onlysearch
+      POSTGRES_PASSWORD: onlysearch
+    ports:
+      - '5432:5432'
+    volumes:
+      - ch-onlysearch-data:/var/lib/postgresql/data
+      - .docker/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql
+    networks:
+      - ch-onlysearch-network
+
+  ch-onlysearch-redis:
+    container_name: ch-onlysearch-redis
+    image: redis:alpine
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    networks:
+      - ch-onlysearch-network
+
+networks:
+  ch-onlysearch-network:
+    driver: bridge
+
+volumes:
+  ch-onlysearch-data:
