@@ -4,6 +4,8 @@ WORKDIR /var/www/html/app
 
 # Install system dependencies including Nginx
 RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    libonig-dev \
     nginx \
     build-essential \
     libpng-dev \
@@ -51,7 +53,11 @@ RUN apt-get update && apt-get install -y \
     libxrandr2 \
     libxrender1 \
     libxss1 \
-    libxtst6 \
+    libxtst6
+
+# Install Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+RUN apt-get install -y nodejs \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
@@ -67,14 +73,16 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # Import project and install dependencies
 COPY . /var/www/html/app
-RUN composer install --quiet --optimize-autoloader \
+# RUN composer install --quiet --optimize-autoloader \
+RUN composer install --quiet \
     && chown -R www-data:www-data /var/www/html/app \
     && chmod -R 775 /var/www/html/app/storage /var/www/html/app/bootstrap/cache \
     && chmod +x /var/www/html/app/entrypoint.sh
 
 # Setup browsershot
 RUN npm install \
-    && npx puppeteer browsers install chrome-headless-shell
+    && npx puppeteer browsers install chrome-headless-shell \
+    && npm run build
 
 # Correct the cron job setup
 RUN echo "* * * * * www-data cd /var/www/html/app && php artisan schedule:run >> /var/log/cron.log 2>&1" > /etc/cron.d/laravel-scheduler \

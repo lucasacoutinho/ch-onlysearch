@@ -25,6 +25,7 @@ services:
     restart: unless-stopped
     tty: true
     environment:
+      PGPASSWORD: onlysearch
       POSTGRES_DB: onlysearch
       POSTGRES_USER: onlysearch
       POSTGRES_PASSWORD: onlysearch
@@ -32,7 +33,11 @@ services:
       - '5432:5432'
     volumes:
       - ch-onlysearch-data:/var/lib/postgresql/data
-      - .docker/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql
+      - ../.docker/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql
+    healthcheck:
+        test: ["CMD", "pg_isready", "-q", "-d", "onlysearch", "-U", "onlysearch"]
+        retries: 3
+        timeout: 5s
     networks:
       - ch-onlysearch-network
 

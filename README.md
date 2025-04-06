@@ -52,7 +52,7 @@ To run the tests, use the following command:
 
 
 ```bash
-docker compose exec app php artisan test
+docker compose exec ch-onlysearch-api bash
 ```
 
 ```bash
