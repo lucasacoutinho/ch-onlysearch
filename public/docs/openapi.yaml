@@ -1,0 +1,169 @@
+openapi: 3.0.3
+info:
+  title: 'Onlysearch Challange - Local API Documentation'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+tags:
+  -
+    name: Profiles
+    description: 'Profiles API'
+paths:
+  /api/v1/profile:
+    get:
+      summary: 'Search for profiles'
+      operationId: searchForProfiles
+      description: ''
+      parameters:
+        -
+          in: query
+          name: query
+          description: 'The query to search for. Must not be greater than 255 characters.'
+          example: john
+          required: true
+          schema:
+            type: string
+            description: 'The query to search for. Must not be greater than 255 characters.'
+            example: john
+            nullable: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    username: gbailey
+                    name: 'Macey Rempel PhD'
+                    bio: 'Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.'
+                    likes: 678376
+                    last_scraped_at: null
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                        example: gbailey
+                      name:
+                        type: string
+                        example: 'Macey Rempel PhD'
+                      bio:
+                        type: string
+                        example: 'Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.'
+                      likes:
+                        type: integer
+                        example: 678376
+                      last_scraped_at:
+                        type: string
+                        example: null
+      tags:
+        - Profiles
+      security: []
+  '/api/v1/profile/{username}':
+    get:
+      summary: 'Get a profile by username'
+      operationId: getAProfileByUsername
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    username: zbailey
+                    name: 'Rowan Gulgowski'
+                    bio: 'Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.'
+                    likes: 678376
+                    last_scraped_at: null
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                        example: zbailey
+                      name:
+                        type: string
+                        example: 'Rowan Gulgowski'
+                      bio:
+                        type: string
+                        example: 'Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.'
+                      likes:
+                        type: integer
+                        example: 678376
+                      last_scraped_at:
+                        type: string
+                        example: null
+      tags:
+        - Profiles
+      security: []
+    post:
+      summary: 'Scrape a profile'
+      operationId: scrapeAProfile
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Scraping started'
+                properties:
+                  message:
+                    type: string
+                    example: 'Scraping started'
+      tags:
+        - Profiles
+      security: []
+    parameters:
+      -
+        in: path
+        name: username
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: 'The username of the profile'
+  '/api/v1/profile/{username}/status':
+    get:
+      summary: 'Get the scraping status of a profile'
+      operationId: getTheScrapingStatusOfAProfile
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: pending
+                properties:
+                  status:
+                    type: string
+                    example: pending
+      tags:
+        - Profiles
+      security: []
+    parameters:
+      -
+        in: path
+        name: username
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: 'The username of the profile'

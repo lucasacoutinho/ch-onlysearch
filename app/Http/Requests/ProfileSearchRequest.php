@@ -25,4 +25,19 @@ class ProfileSearchRequest extends FormRequest
             'query' => ['required', 'string', 'max:255'],
         ];
     }
+
+    /**
+     * Define the query parameters for the request docs.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function queryParameters(): array
+    {
+        return [
+            'query' => [
+                'description' => 'The query to search for',
+                'example' => 'john',
+            ]
+        ];
+    }
 }
