@@ -12,6 +12,7 @@ class Profile extends Model
 {
     /** @use HasFactory<\Database\Factories\ProfileFactory> */
     use HasFactory;
+
     use Searchable;
 
     protected $fillable = [
@@ -36,7 +37,7 @@ class Profile extends Model
 
     public function getWasScrapedAttribute(): bool
     {
-        if (!$this->last_scraped_at) {
+        if (! $this->last_scraped_at) {
             return false;
         }
 

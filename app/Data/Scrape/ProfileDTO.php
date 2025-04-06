@@ -11,6 +11,5 @@ class ProfileDTO extends Data
         public string $name,
         public string $bio,
         public int $likes,
-    ) {
-    }
+    ) {}
 }

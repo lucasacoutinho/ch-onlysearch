@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 
 class ScrapeProfiles extends Command
 {
-    protected $signature = 'scrape:profiles {--likes-min} {--likes-max}';
+    protected $signature = 'scrape:profiles {--likes-min=} {--likes-max=}';
 
     protected $description = 'Scrape profiles from OnlyFans';
 
@@ -22,10 +22,10 @@ class ScrapeProfiles extends Command
         $profiles = $profileService->getProfilesBetweenLikes($min, $max);
 
         $profiles->each(function (Profile $profile) use ($profileService) {
-            $this->info('Scraping profile ' . $profile->username);
+            $this->info('Scraping profile '.$profile->username);
             $profileService->scrape($profile->username);
         });
 
-        $this->info('Scraped ' . $profiles->count() . ' profiles');
+        $this->info('Scraped '.$profiles->count().' profiles');
     }
 }

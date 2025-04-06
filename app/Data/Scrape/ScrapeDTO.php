@@ -8,6 +8,5 @@ class ScrapeDTO extends Data
 {
     public function __construct(
         public Data $content,
-    ) {
-    }
+    ) {}
 }

@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Onlysearch Challange - Local API Documentation",
-        "_postman_id": "edd13deb-6279-4006-b600-312924194faa",
+        "_postman_id": "7f2d64c7-0a45-4c69-bfe2-b3cf4e43ff3f",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -73,7 +73,7 @@
                                 {
                                     "id": "username",
                                     "key": "username",
-                                    "value": "architecto",
+                                    "value": "amouranth",
                                     "description": ""
                                 }
                             ]
@@ -99,7 +99,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\"data\":{\"username\":\"zbailey\",\"name\":\"Rowan Gulgowski\",\"bio\":\"Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.\",\"likes\":678376,\"last_scraped_at\":null}}",
+                            "body": "{\"data\":{\"username\":\"lwisoky\",\"name\":\"Kirstin Nitzsche V\",\"bio\":\"Veniam corporis dolorem mollitia. Nemo odit quia officia est dignissimos. Blanditiis odio veritatis excepturi doloribus delectus fugit. Repudiandae laboriosam est alias tenetur ratione.\",\"likes\":544302,\"last_scraped_at\":null}}",
                             "name": ""
                         }
                     ]
@@ -116,7 +116,7 @@
                                 {
                                     "id": "username",
                                     "key": "username",
-                                    "value": "architecto",
+                                    "value": "amouranth",
                                     "description": ""
                                 }
                             ]
@@ -159,7 +159,7 @@
                                 {
                                     "id": "username",
                                     "key": "username",
-                                    "value": "architecto",
+                                    "value": "amouranth",
                                     "description": ""
                                 }
                             ]

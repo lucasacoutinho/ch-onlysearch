@@ -42,7 +42,16 @@ class ProfileService
             $profile = $this->profileRepository->create(['username' => $username]);
         }
 
-        Scrape::dispatch(new ScrapeProfileRequest($profile->username));
+        Scrape::dispatch(new ScrapeProfileRequest($profile->username))->onQueue($this->getQueue($profile));
+    }
+
+    private function getQueue(Profile $profile): string
+    {
+        return match (true) {
+            $profile->likes < 100_000 => 'up_to_100k',
+            $profile->likes >= 100_000 => 'above_100k',
+            default => 'default',
+        };
     }
 
     public function update(string $username, array $data): void

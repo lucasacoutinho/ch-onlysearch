@@ -2,6 +2,7 @@
 
 namespace App\Services\Scrape\Parsers;
 
+use App\Exceptions\Scrape\ExpectedFieldNotFoundException;
 use Dom\HTMLDocument;
 
 class ProfileParser implements Parser
@@ -11,42 +12,50 @@ class ProfileParser implements Parser
         $dom = HTMLDocument::createFromString($content);
 
         $username = $this->getUsername($dom);
-        $name     = $this->getName($dom);
-        $bio      = $this->getBio($dom);
-        $likes    = $this->getLikes($dom);
+        $name = $this->getName($dom);
+        $bio = $this->getBio($dom);
+        $likes = $this->getLikes($dom);
 
         return [
             'username' => $username,
-            'name'     => $name,
-            'bio'      => $bio,
-            'likes'    => $likes,
+            'name' => $name,
+            'bio' => $bio,
+            'likes' => $likes,
         ];
     }
 
     private function getUsername(HTMLDocument $dom): string
     {
-        $node = $dom->querySelector('#content > div.l-wrapper.m-guest > div.l-wrapper__holder-content > div > div.l-profile-container > div > div.b-profile__header__user.g-sides-gaps > div.b-profile__user.d-flex.align-items-start > div.b-profile__names.mw-0.w-100.mw-100 > div:nth-child(2) > div.g-user-realname__wrapper.m-nowrap-text > div');
+        $node = $dom->querySelector('.b-profile__names > .b-username-row > .g-user-realname__wrapper > .g-user-username');
+        throw_if(empty($node), ExpectedFieldNotFoundException::class, 'Username');
+
         $username = $node->textContent;
         return trim(str_replace('@', '', $username));
     }
 
     private function getName(HTMLDocument $dom): string
     {
-        $node = $dom->querySelector('#content > div.l-wrapper.m-guest > div.l-wrapper__holder-content > div > div.b-compact-header.g-sides-gaps.js-compact-sticky-header > div > div.b-compact-header__user.mw-0.flex-fill-1 > div.b-username-row.m-gap-clear > div > div');
+        $node = $dom->querySelector('.b-profile__names > .b-username-row > .b-username > .g-user-name');
+        throw_if(empty($node), ExpectedFieldNotFoundException::class, 'Name');
+
         $name = $node->textContent;
         return trim($name);
     }
 
     private function getBio(HTMLDocument $dom): string
     {
-        $node = $dom->querySelector('#content > div.l-wrapper.m-guest > div.l-wrapper__holder-content > div > div.l-profile-container > div > div.b-profile__header__user.g-sides-gaps > div.b-profile__content > div.b-user-info.m-mb-sm > div > div > div > p');
+        $node = $dom->querySelector('.b-user-info__text');
+        throw_if(empty($node), ExpectedFieldNotFoundException::class, 'Bio');
+
         $bio = $node->textContent;
         return trim(strip_tags($bio));
     }
 
     private function getLikes(HTMLDocument $dom): int
     {
-        $node = $dom->querySelector('#content > div.l-wrapper.m-guest > div.l-wrapper__holder-content > div > div.b-compact-header.g-sides-gaps.js-compact-sticky-header > div > div.b-compact-header__user.mw-0.flex-fill-1 > div.b-profile__sections.d-flex.align-items-center > div > div:nth-child(4) > span > span');
+        $node = $dom->querySelector('.b-profile__sections__link > svg[data-icon-name="icon-like"] + span.b-profile__sections__count');
+        throw_if(empty($node), ExpectedFieldNotFoundException::class, 'Likes');
+
         $likes = $node->textContent;
         $likes = trim($likes);
 
@@ -60,6 +69,7 @@ class ProfileParser implements Parser
 
         if (isset($multipliers[$suffix])) {
             $number = (float) substr($likes, 0, -1);
+
             return (int) ($number * $multipliers[$suffix]);
         }
 

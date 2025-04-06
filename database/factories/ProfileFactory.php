@@ -19,10 +19,10 @@ class ProfileFactory extends Factory
     {
         return [
             'username' => fake()->userName(),
-            'name'     => fake()->name(),
-            'bio'      => fake()->text(),
-            'likes'    => fake()->numberBetween(1000, 1000000),
-            'status'   => ProfileStatus::PENDING,
+            'name' => fake()->name(),
+            'bio' => fake()->text(),
+            'likes' => fake()->numberBetween(1000, 1000000),
+            'status' => ProfileStatus::PENDING,
         ];
     }
 }

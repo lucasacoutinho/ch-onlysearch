@@ -30,7 +30,7 @@ describe('Profile', function () {
                 'bio' => $profile->bio,
                 'likes' => $profile->likes,
                 'last_scraped_at' => $profile->last_scraped_at,
-            ]
+            ],
         ]);
     });
 });

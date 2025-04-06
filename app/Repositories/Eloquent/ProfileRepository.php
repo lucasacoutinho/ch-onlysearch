@@ -34,8 +34,8 @@ class ProfileRepository extends BaseRepository implements ProfileRepositoryInter
     public function getProfilesBetweenLikes(?int $min = null, ?int $max = null): LazyCollection
     {
         return $this->model->query()
-            ->when($min, fn($query) => $query->where('likes', '>=', $min))
-            ->when($max, fn($query) => $query->where('likes', '<', $max))
+            ->when($min, fn ($query) => $query->where('likes', '>=', $min))
+            ->when($max, fn ($query) => $query->where('likes', '<', $max))
             ->orderBy('likes', 'desc')
             ->cursor();
     }

@@ -5,7 +5,7 @@ namespace App\Exceptions\Profile;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
-class ProfileNotFound extends Exception
+class ProfileNotFoundException extends Exception
 {
     public function __construct(string $username)
     {

@@ -3,6 +3,7 @@
 namespace Tests\Unit\v1\Profile;
 
 use App\Enums\ProfileStatus;
+use App\Exceptions\Scrape\ExpectedFieldNotFoundException;
 use App\Models\Profile;
 use App\Repositories\ProfileRepositoryInterface;
 use App\Services\ProfileService;
@@ -17,7 +18,7 @@ describe('Profile Scraping', function () {
         $this->instance(
             Browsershot::class,
             Mockery::mock(Browsershot::class, function (MockInterface $mock) use ($username) {
-                $mock->shouldReceive('url')->with('https://www.onlyfans.com/' . $username)->andReturnSelf();
+                $mock->shouldReceive('setUrl')->with('https://www.onlyfans.com/' . $username)->andReturnSelf();
                 $mock->shouldReceive('noSandbox')->andReturnSelf();
                 $mock->shouldReceive('waitUntilNetworkIdle')->andReturnSelf();
                 $mock->shouldReceive('bodyHtml')->andReturn(file_get_contents(base_path('tests/Mocks/Profile/profile.html')));
@@ -46,7 +47,7 @@ describe('Profile Scraping', function () {
         $this->instance(
             Browsershot::class,
             Mockery::mock(Browsershot::class, function (MockInterface $mock) use ($username) {
-                $mock->shouldReceive('url')->with('https://www.onlyfans.com/' . $username)->andReturnSelf();
+                $mock->shouldReceive('setUrl')->with('https://www.onlyfans.com/' . $username)->andReturnSelf();
                 $mock->shouldReceive('noSandbox')->andReturnSelf();
                 $mock->shouldReceive('waitUntilNetworkIdle')->andReturnSelf();
                 $mock->shouldReceive('bodyHtml')->andReturn(file_get_contents(base_path('tests/Mocks/Profile/notfound.html')));
@@ -67,5 +68,5 @@ describe('Profile Scraping', function () {
             'username' => $username,
             'status' => ProfileStatus::FAILED,
         ]);
-    });
+    })->throws(ExpectedFieldNotFoundException::class);
 });

@@ -24,13 +24,8 @@ class Scrape implements ShouldQueue
     {
         $this->request->processing();
 
-        try {
-            $scrapeService->setPage($this->request->getPage());
-            $result = $scrapeService->scrape();
-        } catch (Throwable $e) {
-            $this->failed($e);
-            return;
-        }
+        $scrapeService->setPage($this->request->getPage());
+        $result = $scrapeService->scrape();
 
         $this->request->completed($result);
     }

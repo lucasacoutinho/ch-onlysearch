@@ -25,7 +25,7 @@ describe('Profile', function () {
 
         $this->assertDatabaseHas('profiles', [
             'username' => $username,
-            'status'   => ProfileStatus::PENDING,
+            'status' => ProfileStatus::PENDING,
         ]);
     });
 
@@ -49,7 +49,7 @@ describe('Profile', function () {
 
         $this->assertDatabaseHas('profiles', [
             'username' => $username,
-            'status'   => ProfileStatus::COMPLETED,
+            'status' => ProfileStatus::COMPLETED,
         ]);
     });
 
@@ -92,7 +92,7 @@ describe('Profile', function () {
 
         $this->assertDatabaseHas('profiles', [
             'username' => $username,
-            'status'   => ProfileStatus::COMPLETED,
+            'status' => ProfileStatus::COMPLETED,
         ]);
     });
 
@@ -123,7 +123,7 @@ describe('Profile', function () {
         $this->instance(
             Browsershot::class,
             Mockery::mock(Browsershot::class, function (MockInterface $mock) use ($username) {
-                $mock->shouldReceive('url')->with('https://www.onlyfans.com/' . $username)->andReturnSelf();
+                $mock->shouldReceive('setUrl')->with('https://www.onlyfans.com/' . $username)->andReturnSelf();
                 $mock->shouldReceive('noSandbox')->andReturnSelf();
                 $mock->shouldReceive('waitUntilNetworkIdle')->andReturnSelf();
                 $mock->shouldReceive('bodyHtml')->andReturn(file_get_contents(base_path('tests/Mocks/Profile/profile.html')));
@@ -135,12 +135,12 @@ describe('Profile', function () {
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('profiles', [
-            'username'        => $username,
-            'name'            => ucfirst($username),
-            'bio'             => 'You know who I am. I know why you’re here. Let\'s Cut the Bullshit. Hit Subscribe.ONLYFANS DISCLAIMER & LEGAL NOTICE: All content on this account is owned by me and protected under US and international copyright law, including any content purchased separately. Reproduction and distribution of any content, comments, conversations and/or private messages is strictly prohibited for any use. Violation of these terms will result in legal action against you and a permanent ban from the OnlyFans platform. By subscribing to this account and engaging in any "Fan and Creator Interactions" you acknowledge full agreement to OnlyFans\' Terms of Service, including the Contract Between Fan and Creator. You further acknowledge and agree that this account is run by me and my team, who are authorized to respond on my behalf to any communications to ensure the best experience. We strive to interact with you in the most authentic and respectful manner and ask that you do the same. Copyright 2025',
-            'likes'           => 1_670_000,
-            'status'          => ProfileStatus::COMPLETED,
-            'last_scraped_at' => now()
+            'username' => $username,
+            'name' => ucfirst($username),
+            'bio' => 'You know who I am. I know why you’re here. Let\'s Cut the Bullshit. Hit Subscribe.ONLYFANS DISCLAIMER & LEGAL NOTICE: All content on this account is owned by me and protected under US and international copyright law, including any content purchased separately. Reproduction and distribution of any content, comments, conversations and/or private messages is strictly prohibited for any use. Violation of these terms will result in legal action against you and a permanent ban from the OnlyFans platform. By subscribing to this account and engaging in any "Fan and Creator Interactions" you acknowledge full agreement to OnlyFans\' Terms of Service, including the Contract Between Fan and Creator. You further acknowledge and agree that this account is run by me and my team, who are authorized to respond on my behalf to any communications to ensure the best experience. We strive to interact with you in the most authentic and respectful manner and ask that you do the same. Copyright 2025',
+            'likes' => 1_670_000,
+            'status' => ProfileStatus::COMPLETED,
+            'last_scraped_at' => now(),
         ]);
     });
 });

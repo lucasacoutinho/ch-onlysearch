@@ -25,7 +25,7 @@ class ScrapeService
             throw new \Exception('Page not set');
         }
 
-        $this->browsershot->url($this->page->getUrl());
+        $this->browsershot->setUrl($this->page->getUrl());
         $this->browsershot->noSandbox();
         $this->browsershot->waitUntilNetworkIdle();
         $html = $this->browsershot->bodyHtml();
@@ -36,6 +36,7 @@ class ScrapeService
     private function handle(string $content): ScrapeDTO
     {
         $handler = $this->page->getHandler();
+
         return $handler($content);
     }
 }

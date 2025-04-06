@@ -20,13 +20,13 @@ class Profile implements Page
 
     public function getParser(): Parser
     {
-        return new ProfileParser();
+        return new ProfileParser;
     }
 
     public function getHandler(): callable
     {
         return function (string $html) {
-            $parser  = new ProfileParser();
+            $parser = new ProfileParser;
             $content = $parser->parse($html);
 
             $result = new ScrapeDTO(content: ProfileDTO::from($content));

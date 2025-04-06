@@ -37,7 +37,7 @@ class ProfileSearchRequest extends FormRequest
             'query' => [
                 'description' => 'The query to search for',
                 'example' => 'john',
-            ]
+            ],
         ];
     }
 }

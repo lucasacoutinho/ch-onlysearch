@@ -27,8 +27,11 @@ services:
     networks:
       - ch-onlysearch-network
     depends_on:
-      - ch-onlysearch-database
-      - ch-onlysearch-redis
+      ch-onlysearch-database:
+        condition: service_healthy
+        restart: true
+      ch-onlysearch-redis:
+        condition: service_started
 
   ch-onlysearch-database:
     container_name: ch-onlysearch-database
@@ -47,8 +50,10 @@ services:
       - ../.docker/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql
     healthcheck:
         test: ["CMD", "pg_isready", "-q", "-d", "onlysearch", "-U", "onlysearch"]
-        retries: 3
-        timeout: 5s
+        interval: 10s
+        retries: 5
+        start_period: 30s
+        timeout: 10s
     networks:
       - ch-onlysearch-network
 

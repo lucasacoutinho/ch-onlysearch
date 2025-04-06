@@ -79,10 +79,10 @@ paths:
                 type: object
                 example:
                   data:
-                    username: zbailey
-                    name: 'Rowan Gulgowski'
-                    bio: 'Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.'
-                    likes: 678376
+                    username: lwisoky
+                    name: 'Kirstin Nitzsche V'
+                    bio: 'Veniam corporis dolorem mollitia. Nemo odit quia officia est dignissimos. Blanditiis odio veritatis excepturi doloribus delectus fugit. Repudiandae laboriosam est alias tenetur ratione.'
+                    likes: 544302
                     last_scraped_at: null
                 properties:
                   data:
@@ -90,16 +90,16 @@ paths:
                     properties:
                       username:
                         type: string
-                        example: zbailey
+                        example: lwisoky
                       name:
                         type: string
-                        example: 'Rowan Gulgowski'
+                        example: 'Kirstin Nitzsche V'
                       bio:
                         type: string
-                        example: 'Nihil accusantium harum mollitia modi deserunt. Ab provident perspiciatis quo omnis nostrum aut adipisci. Nostrum qui commodi incidunt iure.'
+                        example: 'Veniam corporis dolorem mollitia. Nemo odit quia officia est dignissimos. Blanditiis odio veritatis excepturi doloribus delectus fugit. Repudiandae laboriosam est alias tenetur ratione.'
                       likes:
                         type: integer
-                        example: 678376
+                        example: 544302
                       last_scraped_at:
                         type: string
                         example: null
@@ -132,10 +132,10 @@ paths:
         in: path
         name: username
         description: ''
-        example: architecto
+        example: amouranth
         required: true
         schema:
-          type: 'The username of the profile'
+          type: string
   '/api/v1/profile/{username}/status':
     get:
       summary: 'Get the scraping status of a profile'
@@ -163,7 +163,7 @@ paths:
         in: path
         name: username
         description: ''
-        example: architecto
+        example: amouranth
         required: true
         schema:
-          type: 'The username of the profile'
+          type: string
